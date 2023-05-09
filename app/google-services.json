@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "466088827455",
+    "firebase_url": "https://hydroapp-9623e-default-rtdb.firebaseio.com",
+    "project_id": "hydroapp-9623e",
+    "storage_bucket": "hydroapp-9623e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466088827455:android:ebf93c17bcef9c5dfe368a",
+        "android_client_info": {
+          "package_name": "com.id.syahrial.hydroapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466088827455-088lts4oc544t855ucvrdk0fq6k603mk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxxadPdGrvE-3WVRYOObcrNa7XFp2rxKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466088827455-088lts4oc544t855ucvrdk0fq6k603mk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
