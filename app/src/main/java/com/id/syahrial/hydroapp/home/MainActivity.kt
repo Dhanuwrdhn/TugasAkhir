@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         val bufferedWriter = BufferedWriter(outputStreamWriter)
 
         if (!isHeaderWritten) {
-            val header = "pH Air,TDS PPM"
+            val header = "pH Air,TDS PPM, DHT kelembapan, Suhu"
             bufferedWriter.write(header)
             bufferedWriter.newLine()
         }
@@ -167,6 +167,15 @@ class MainActivity : AppCompatActivity() {
                 val tds = snapshot.child("TDS/ppm").getValue(Double::class.java)
                 val ppmnutrisi = String.format("%.2f", tds)
                 binding.tvTdsmeter2.text = ppmnutrisi
+                val suhu = snapshot.child("Suhu/celcius").getValue(Double::class.java)
+                val airtemp = String.format("%.1f", suhu)
+                binding.tvSuhu.text = airtemp
+
+                val kelembapan = snapshot.child("DHT/kelembapan").getValue(Double::class.java)
+                val humidity = String.format("%.1f", kelembapan)
+                binding.tvKelembapan.text = humidity
+
+
                 val isConnected = snapshot.child("ESP32")
                     .getValue(Boolean::class.java)
                 if (isConnected != null && isConnected) {
@@ -187,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                     isToastShown = false
                 }
 
-                val newData = "$air,$tds"
+                val newData = "$air,$tds,$suhu,$kelembapan"
                 if (data.isEmpty()) {
                     // Jika data masih kosong, set data dengan data baru
                     data = newData
