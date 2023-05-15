@@ -1,6 +1,9 @@
 package com.id.syahrial.hydroapp.home
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
@@ -8,17 +11,18 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.service.controls.Control
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.core.Context
 import com.id.syahrial.hydroapp.R
 import com.id.syahrial.hydroapp.control.ControlActivity
 import com.id.syahrial.hydroapp.databinding.ActivityMainBinding
@@ -26,6 +30,8 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
+
+const val Channel_ID = "channelId"
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -46,6 +52,24 @@ class MainActivity : AppCompatActivity() {
         )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        createNotificationChannel()
+        //notification
+        var builder = NotificationCompat.Builder(this, Channel_ID)
+        builder.setSmallIcon(R.drawable.ic_logo_app)
+            .setContentTitle("HydroApp")
+            .setContentText("You haven't controlled your hydroponics this week")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)) {
+            if (ActivityCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            notify(1, builder.build())
+        }
         // Check if the app has permission to access Wi-Fi state
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE)
             != PackageManager.PERMISSION_GRANTED
@@ -215,5 +239,16 @@ class MainActivity : AppCompatActivity() {
         database.addValueEventListener(postHydro)
 
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR_0_1) {
+            val channel =
+                NotificationChannel(Channel_ID, "HydroApp", NotificationManager.IMPORTANCE_DEFAULT)
+            channel.description = "You haven't controlled your hydroponics this week"
+            val notificationManager =getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }
