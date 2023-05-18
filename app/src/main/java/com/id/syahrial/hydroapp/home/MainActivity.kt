@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         val bufferedWriter = BufferedWriter(outputStreamWriter)
 
         if (!isHeaderWritten) {
-            val header = "pH Air,TDS PPM, DHT kelembapan, Suhu"
+            val header = "pH Air,TDS PPM, DHT kelembapan, temperature"
             bufferedWriter.write(header)
             bufferedWriter.newLine()
         }
@@ -167,10 +167,9 @@ class MainActivity : AppCompatActivity() {
                 val tds = snapshot.child("TDS/ppm").getValue(Double::class.java)
                 val ppmnutrisi = String.format("%.2f", tds)
                 binding.tvTdsmeter2.text = ppmnutrisi
-                val suhu = snapshot.child("Suhu/celcius").getValue(Double::class.java)
+                val suhu = snapshot.child("DHT/temperature").getValue(Double::class.java)
                 val airtemp = String.format("%.1f", suhu)
                 binding.tvSuhu.text = airtemp
-
                 val kelembapan = snapshot.child("DHT/kelembapan").getValue(Double::class.java)
                 val humidity = String.format("%.1f", kelembapan)
                 binding.tvKelembapan.text = humidity
