@@ -26,12 +26,12 @@ import com.google.firebase.database.ValueEventListener
 import com.id.syahrial.hydroapp.R
 import com.id.syahrial.hydroapp.control.ControlActivity
 import com.id.syahrial.hydroapp.databinding.ActivityMainBinding
+import com.id.syahrial.hydroapp.notification.NotificationActivity
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 
-const val Channel_ID = "channelId"
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -52,24 +52,7 @@ class MainActivity : AppCompatActivity() {
         )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        createNotificationChannel()
-        //notification
-        var builder = NotificationCompat.Builder(this, Channel_ID)
-        builder.setSmallIcon(R.drawable.ic_logo_app)
-            .setContentTitle("HydroApp")
-            .setContentText("You haven't controlled your hydroponics this week")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        with(NotificationManagerCompat.from(this)) {
-            if (ActivityCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-            notify(1, builder.build())
-        }
         // Check if the app has permission to access Wi-Fi state
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE)
             != PackageManager.PERMISSION_GRANTED
@@ -89,6 +72,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnControl.setOnClickListener {
             val intent = Intent(this, ControlActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnNotification.setOnClickListener {
+            val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)
         }
 
@@ -241,14 +228,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR_0_1) {
-            val channel =
-                NotificationChannel(Channel_ID, "HydroApp", NotificationManager.IMPORTANCE_DEFAULT)
-            channel.description = "You haven't controlled your hydroponics this week"
-            val notificationManager =getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
 }
