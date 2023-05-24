@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#AED77A"
-    tools:context=".control.ControlActivity">
+    tools:context=".notification.NotificationActivity">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvDashboard"
             android:layout_width="match_parent"
@@ -72,7 +74,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvControl"
+            android:id="@+id/cvControlNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -90,20 +92,20 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/tvControl"
+                    android:id="@+id/tvControlNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Control Nutrisi"
+                    android:text="Control Notification"
                     android:textColor="#AED77A"
                     android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilControl"
+                    android:id="@+id/tilTitle"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,19 +118,80 @@
                     app:boxCornerRadiusTopStart="6dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvControl">
+                    app:layout_constraintTop_toBottomOf="@+id/tvControlNotification">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etControl"
+                        android:id="@+id/etTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:hint="Input your control here"
-                        android:inputType="number"
+                        android:hint="Input your title here"
                         android:textSize="10dp"
                         app:hintEnabled="true"
                         tools:ignore="TextSizeCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilMessage"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:boxCornerRadiusBottomEnd="6dp"
+                    app:boxCornerRadiusBottomStart="6dp"
+                    app:boxCornerRadiusTopEnd="6dp"
+                    app:boxCornerRadiusTopStart="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilTitle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="Input your Message Here"
+                        android:textSize="10dp"
+                        app:hintEnabled="true"
+                        tools:ignore="TextSizeCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTimePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilMessage">
+
+                    <DatePicker
+                        android:id="@+id/datePicker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="-30dp"
+                        android:layout_weight="1"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7" />
+
+                    <TimePicker
+                        android:id="@+id/timePicker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="-30dp"
+                        android:layout_weight="1"
+                        android:datePickerMode="spinner"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7" />
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnControl"
@@ -138,24 +201,26 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="8dp"
                     app:cardBackgroundColor="#AED77A"
+                    app:cardCornerRadius="8dp"
                     app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilControl">
+                    app:layout_constraintTop_toBottomOf="@+id/llTimePicker">
 
                     <TextView
                         android:id="@+id/tvConfirmControl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="Confirm yout control"
-                        android:textSize="12dp"
-                        android:layout_gravity="center"/>
+                        android:text="Confirm yout Notification"
+                        android:textSize="12dp" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.card.MaterialCardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

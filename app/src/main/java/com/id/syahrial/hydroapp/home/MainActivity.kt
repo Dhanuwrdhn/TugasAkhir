@@ -22,6 +22,7 @@ import com.google.firebase.database.core.Context
 import com.id.syahrial.hydroapp.R
 import com.id.syahrial.hydroapp.control.ControlActivity
 import com.id.syahrial.hydroapp.databinding.ActivityMainBinding
+import com.id.syahrial.hydroapp.notification.NotificationActivity
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
@@ -67,6 +68,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ControlActivity::class.java)
             startActivity(intent)
         }
+        binding.btnNotification.setOnClickListener {
+            val intent = Intent(this, NotificationActivity::class.java)
+            startActivity(intent)
+        }
+
 
         binding.btnDownload.setOnClickListener {
             if (
