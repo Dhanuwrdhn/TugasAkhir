@@ -147,10 +147,10 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvPh"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="160dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="207dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -202,15 +202,15 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvTds"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="207dp"
-            android:layout_marginTop="24dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvTimeStamps">
+            app:layout_constraintTop_toBottomOf="@+id/cvPh">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -257,15 +257,15 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvSuhu"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="160dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="207dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvPh">
+            app:layout_constraintTop_toBottomOf="@+id/cvTds">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -312,15 +312,15 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvKelembapan"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="207dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvTds">
+            app:layout_constraintTop_toBottomOf="@+id/cvSuhu">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
