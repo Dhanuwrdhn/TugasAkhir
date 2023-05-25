@@ -98,7 +98,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
                     android:fontFamily="@font/poppins"
-                    android:format24Hour="hh:mm:ss"
+                    android:format24Hour="dd/MM/yyyy hh:mm:ss"
                     android:textColor="@color/greenLeaf"
                     android:textSize="14sp"
                     android:text="clock"
@@ -147,7 +147,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvPh"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="207dp"
@@ -202,7 +202,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvTds"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:layout_marginStart="207dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
@@ -257,7 +257,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvSuhu"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="207dp"
@@ -312,7 +312,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvKelembapan"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:layout_marginStart="207dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
