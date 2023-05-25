@@ -1,6 +1,7 @@
 package com.id.syahrial.hydroapp.home
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
@@ -8,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.service.controls.Control
 import android.view.WindowManager
 import android.widget.Toast
@@ -27,6 +29,9 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -63,18 +68,28 @@ class MainActivity : AppCompatActivity() {
             // Your code to check Wi-Fi state and display notifications goes here
         }
 
+        handler = Handler(Looper.getMainLooper())
+        handler.post(object : Runnable {
+            override fun run() {
+                updateTimestamp()
+                handler.postDelayed(this, 1000) // perbarui setiap 1 detik
+            }
+        })
 
-        binding.btnControl.setOnClickListener {
+
+
+
+        binding.icControl.setOnClickListener {
             val intent = Intent(this, ControlActivity::class.java)
             startActivity(intent)
         }
-        binding.btnNotification.setOnClickListener {
+        binding.icNotification.setOnClickListener {
             val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)
         }
 
 
-        binding.btnDownload.setOnClickListener {
+        binding.icDownload  .setOnClickListener {
             if (
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
             ) {
@@ -85,6 +100,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         databaserealtime()
+    }
+    @SuppressLint("SimpleDateFormat")
+    private fun updateTimestamp() {
+        val timestamp = System.currentTimeMillis()
+        val date = Date(timestamp)
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        val formattedDate = dateFormat.format(date)
+        binding.timeStampsClock.text = formattedDate
     }
 
     private fun createCsvAndRequestPermission() {
@@ -147,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         val bufferedWriter = BufferedWriter(outputStreamWriter)
 
         if (!isHeaderWritten) {
-            val header = "pH Air,TDS PPM, DHT kelembapan, temperature"
+            val header = "TimeStamps,pH Air,TDS PPM, DHT kelembapan, temperature"
             bufferedWriter.write(header)
             bufferedWriter.newLine()
         }
@@ -179,7 +202,7 @@ class MainActivity : AppCompatActivity() {
                 val kelembapan = snapshot.child("DHT/kelembapan").getValue(Double::class.java)
                 val humidity = String.format("%.1f", kelembapan)
                 binding.tvKelembapan.text = humidity
-
+                val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
 
                 val isConnected = snapshot.child("ESP32")
                     .getValue(Boolean::class.java)
@@ -201,7 +224,7 @@ class MainActivity : AppCompatActivity() {
                     isToastShown = false
                 }
 
-                val newData = "$air,$tds,$suhu,$kelembapan"
+                val newData = "$timestamp,$air,$tds,$suhu,$kelembapan"
                 if (data.isEmpty()) {
                     // Jika data masih kosong, set data dengan data baru
                     data = newData
