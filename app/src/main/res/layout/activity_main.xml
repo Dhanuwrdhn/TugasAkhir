@@ -367,7 +367,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvKelembapan" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvSpace"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -377,7 +377,9 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvKelembapan"/>
+            app:layout_constraintTop_toBottomOf="@+id/cvKelembapan">
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
