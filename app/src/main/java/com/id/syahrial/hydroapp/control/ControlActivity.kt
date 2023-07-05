@@ -2,7 +2,9 @@ package com.id.syahrial.hydroapp.control
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -39,6 +41,26 @@ class ControlActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@ControlActivity, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
 
+            }
+        })
+        val editControl = binding.etControl
+        editControl.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Aksi sebelum perubahan teks
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Aksi saat terjadi perubahan teks
+                val inputText = editControl.text.toString()
+                // Lakukan tindakan yang sesuai dengan perubahan input
+                // Misalnya, periksa panjang teks dan lakukan sesuatu jika mencapai panjang tertentu
+                if (inputText.length >= 10) {
+                    // Lakukan sesuatu
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Aksi setelah perubahan teks
             }
         })
         binding.btnControl.setOnClickListener {

@@ -51,9 +51,9 @@
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="51dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Welcome back danu to dashboard"
+                    android:text="Dashboard"
                     android:textColor="#AED77A"
-                    android:textSize="13dp"
+                    android:textSize="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivLeaf"
@@ -214,6 +214,7 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Confirm yout Notification"
+                        android:textColor="@color/white"
                         android:textSize="12dp" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>

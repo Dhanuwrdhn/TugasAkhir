@@ -10,17 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.service.controls.Control
+import android.util.Log
 import android.view.WindowManager
+import android.widget.Switch
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.core.Context
+import com.google.firebase.database.ktx.snapshots
 import com.id.syahrial.hydroapp.R
 import com.id.syahrial.hydroapp.control.ControlActivity
 import com.id.syahrial.hydroapp.databinding.ActivityMainBinding
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private var data: String = ""
     private var isHeaderWritten = false
     private lateinit var wifiManager: WifiManager
+    private lateinit var pumpSwitch: SwitchMaterial
     private val PERMISSIONSREQUESTCODE = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         // Check if the app has permission to access Wi-Fi state
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE)
             != PackageManager.PERMISSION_GRANTED
@@ -75,10 +80,6 @@ class MainActivity : AppCompatActivity() {
                 handler.postDelayed(this, 1000) // perbarui setiap 1 detik
             }
         })
-
-
-
-
         binding.icControl.setOnClickListener {
             val intent = Intent(this, ControlActivity::class.java)
             startActivity(intent)
@@ -87,7 +88,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)
         }
+        pumpSwitch = findViewById(R.id.pumpSwitch)
+        database = FirebaseDatabase.getInstance().reference
 
+        pumpSwitch.setOnCheckedChangeListener { _, isChecked ->
+            val status = isChecked // Menggunakan nilai boolean dari switch
+            database.child("pump_nutrisiA").setValue(status.toString())
+        }
+        val pumpStatusListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val status = dataSnapshot.getValue(String::class.java)
+                val isPumpOn = status?.toBoolean() ?: false
+                pumpSwitch.isChecked = isPumpOn
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("MainActivity", "Database Error: ${databaseError.message}")
+            }
+        }
+
+        database.child("pump_nutrisiA").addValueEventListener(pumpStatusListener)
 
         binding.icDownload  .setOnClickListener {
             if (
@@ -109,7 +128,6 @@ class MainActivity : AppCompatActivity() {
         val formattedDate = dateFormat.format(date)
         binding.timeStampsClock.text = formattedDate
     }
-
     private fun createCsvAndRequestPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -202,8 +220,8 @@ class MainActivity : AppCompatActivity() {
                 val kelembapan = snapshot.child("DHT/kelembapan").getValue(Double::class.java)
                 val humidity = String.format("%.1f", kelembapan)
                 binding.tvKelembapan.text = humidity
-                val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
 
+                val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
                 val isConnected = snapshot.child("ESP32")
                     .getValue(Boolean::class.java)
                 if (isConnected != null && isConnected) {
@@ -241,6 +259,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         database.addValueEventListener(postHydro)
+
 
 
     }
