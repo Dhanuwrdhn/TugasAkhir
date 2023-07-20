@@ -92,14 +92,15 @@ class MainActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
 
         pumpSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val status = isChecked // Menggunakan nilai boolean dari switch
-            database.child("pump_nutrisiA").setValue(status.toString())
+            val status = isChecked // Menggunakan nilai boolean langsung
+            database.child("pump_nutrisiA").setValue(status)
         }
         val pumpStatusListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val status = dataSnapshot.getValue(String::class.java)
-                val isPumpOn = status?.toBoolean() ?: false
+                val status = dataSnapshot.getValue(Boolean::class.java)
+                val isPumpOn = status ?: false
                 pumpSwitch.isChecked = isPumpOn
+
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.d("MainActivity", "Database Error: ${databaseError.message}")
